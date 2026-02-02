@@ -1,0 +1,7 @@
+Bundle-Name: mvc-portlet-pdi
+Bundle-SymbolicName: mvc.portlet.pdi
+Bundle-Version: 1.0.0
+Export-Package: mvc.portlet.pdi.constants
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
