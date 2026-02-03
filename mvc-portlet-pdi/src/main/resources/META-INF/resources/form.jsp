@@ -1,6 +1,9 @@
 <%@ include file="/init.jsp" %>
 
     <portlet:actionURL name="saveItem" var="addItemActionURL" />
+    <portlet:renderURL var="showItemsRenderURL">
+        <portlet:param name="mvcRenderCommandName" value=" " />
+    </portlet:renderURL>
 
     <div class="page">
         <header class="form-header text-center">
@@ -28,9 +31,9 @@
                         placeholder="Describe your product here"></textarea>
                 </div>
 
-                <div class="btn-group d-flex justify-content-end gap-2">
-                    <button type="submit" class="btn btn-success">Add Item</button>
-                    <button class="btn btn-secondary">List items</button>
+                <div class="btn-group d-flex justify-content-around">
+                    <aui:button type="submit" cssClass="btn btn-success" value="Add Item" />
+                    <a type="button" class="btn btn-secondary" href="<%= showItemsRenderURL %>">See list items</a>
                 </div>
             </div>
         </aui:form>
