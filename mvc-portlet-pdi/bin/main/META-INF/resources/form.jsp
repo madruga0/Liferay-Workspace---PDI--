@@ -28,9 +28,22 @@
                         placeholder="Describe your product here"></textarea>
                 </div>
 
-                <div class="btn-group d-flex justify-content-end gap-2">
-                    <button type="submit" class="btn btn-success">Add Item</button>
-                    <button class="btn btn-secondary">List items</button>
+                <div class="btn-group d-flex justify-content-around">
+                    <aui:button
+                        type="submit"
+                        cssClass="btn btn-success"
+                        value="Add Item"
+                    />
+
+                    <portlet:actionURL var="viewItemsListURL">
+                        <portlet:param name="mvcPath" value="/list_items.jsp" />
+                    </portlet:actionURL>
+                    <aui:button 
+                        type="button" 
+                        cssClass="btn btn-secondary" 
+                        value="See list items" 
+                        onClick="${viewItemsListURL}"
+                    />
                 </div>
             </div>
         </aui:form>

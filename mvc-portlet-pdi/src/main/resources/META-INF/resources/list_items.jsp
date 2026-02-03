@@ -68,5 +68,5 @@ Obtendo os atributos da requisição:
                 </aui:form>
 
 
-                <a href="${voltarURL}" class="btn btn-secondary">Back to the form</a>
+                <a href="${backToFormURL}" class="btn btn-secondary">Back to the form</a>
         </div>
