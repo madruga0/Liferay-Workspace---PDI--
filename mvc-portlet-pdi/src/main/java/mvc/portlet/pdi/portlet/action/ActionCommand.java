@@ -18,13 +18,14 @@ public class ActionCommand implements MVCActionCommand {
     @Override
     public boolean processAction(ActionRequest actionRequest, ActionResponse actionResponse) {
 
+        // Received from form.jsp
         String itemName = ParamUtil.getString(actionRequest, "itemName");
-        double productPrice = ParamUtil.getDouble(actionRequest, "productPrice");
+        Double productPrice = ParamUtil.getDouble(actionRequest, "productPrice");
         String description = ParamUtil.getString(actionRequest, "description");
 
-        System.out.println("O item chegou no Java: " + itemName);
-        System.out.println("O preço chegou no Java: " + productPrice);
-        System.out.println("A descrição chegou no Java: " + description);
+        System.out.println("Item name: " + itemName);
+        System.out.println("Product price: " + productPrice);
+        System.out.println("Description: " + description);
 
         actionRequest.setAttribute("itemName", itemName);
         actionRequest.setAttribute("itemPrice", productPrice);

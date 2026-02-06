@@ -1,5 +1,6 @@
 package mvc.portlet.pdi.portlet.action;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -9,18 +10,17 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 
+/**
+ * @author Pedro Madruga
+ */
 @Component(property = {
 		"javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
 		"mvc.command.name=showItems"
 }, service = MVCRenderCommand.class)
 
-
 public class RenderCommand implements MVCRenderCommand {
 	@Override
-	public String render(RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		System.out.println("Render was called");
-
+	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		return "/list_items.jsp";
 	}
 

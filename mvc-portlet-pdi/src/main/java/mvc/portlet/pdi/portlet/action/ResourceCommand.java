@@ -1,28 +1,48 @@
 package mvc.portlet.pdi.portlet.action;
 
+import java.io.IOException;
+
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 
-@Component(
-    property = {
+@Component(property = {
         "javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
         "mvc.command.name=listAllItens"
 }, service = MVCResourceCommand.class)
-
 
 public class ResourceCommand implements MVCResourceCommand {
 
     @Override
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
             throws PortletException {
-        throw new UnsupportedOperationException("Unimplemented method 'serveResource'");
+
+        String itemName = ParamUtil.getString(resourceRequest, "itemName");
+        double productPrice = ParamUtil.getDouble(resourceRequest, "productPrice");
+        String description = ParamUtil.getString(resourceRequest, "description");
+
+        resourceRequest.setAttribute("itemName", itemName);
+        resourceRequest.setAttribute("productPrice", productPrice);
+        resourceRequest.setAttribute("description", description);
+
+        JSONObject json = JSONFactoryUtil.createJSONObject();
+        json.put("success", true);
+
+        try {
+            resourceResponse.getWriter().print(json.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
@@ -60,5 +80,25 @@ public class ResourceCommand implements MVCResourceCommand {
  * private static final Log _log = LogFactoryUtil.getLog(
  * P8V5DownloadMVCResourceCommand.class);
  * 
+ * }
+ */
+
+// GEMINI CODE
+/*
+ * @Override
+ * public boolean serveResource(
+ * ResourceRequest request, ResourceResponse response) {
+ * 
+ * String name = ParamUtil.getString(request, "itemName");
+ * double price = ParamUtil.getDouble(request, "productPrice");
+ * String description = ParamUtil.getString(request, "description");
+ * 
+ * ItemService.save(name, price, description);
+ * 
+ * JSONObject json = JSONFactoryUtil.createJSONObject();
+ * json.put("success", true);
+ * 
+ * response.getWriter().print(json.toString());
+ * return false;
  * }
  */

@@ -2,7 +2,7 @@
 
     <portlet:actionURL name="saveItem" var="addItemActionURL" />
     <portlet:renderURL var="showItemsRenderURL">
-        <portlet:param name="mvcRenderCommandName" value=" " />
+        <portlet:param name="mvcRenderCommandName" value="showItems" />
     </portlet:renderURL>
 
     <div class="page">
@@ -32,8 +32,8 @@
                 </div>
 
                 <div class="btn-group d-flex justify-content-around">
-                    <aui:button type="submit" cssClass="btn btn-success" value="Add Item" />
-                    <a type="button" class="btn btn-secondary" href="<%= showItemsRenderURL %>">See list items</a>
+                    <aui:button type="submit" cssClass="btn btn-success" value="Add Item" id="submitBtn" />
+                    <a type="button" class="btn btn-secondary" href="<%= showItemsRenderURL %>" id="itemsList">See list items</a>
                 </div>
             </div>
         </aui:form>
