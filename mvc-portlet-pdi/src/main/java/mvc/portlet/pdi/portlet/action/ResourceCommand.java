@@ -1,4 +1,4 @@
-package mvc.portlet.pdi.portlet.resourceCmd;
+package mvc.portlet.pdi.portlet.action;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -13,7 +13,7 @@ import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 @Component(
     property = {
         "javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
-        "mvc.command.name=/p8v5/download"
+        "mvc.command.name=listAllItens"
 }, service = MVCResourceCommand.class)
 
 

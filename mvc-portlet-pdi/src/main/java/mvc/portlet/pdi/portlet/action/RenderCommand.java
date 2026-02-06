@@ -1,18 +1,15 @@
-package mvc.portlet.pdi.portlet.render;
+package mvc.portlet.pdi.portlet.action;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 
-@Component(
-	property = {
+@Component(property = {
 		"javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
 		"mvc.command.name=showItems"
 }, service = MVCRenderCommand.class)
@@ -24,17 +21,13 @@ public class RenderCommand implements MVCRenderCommand {
 
 		System.out.println("Render was called");
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Invoking #render(RenderRequest, RenderResponse)");
-		}
 		return "/list_items.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(RenderCommand.class);
 
 }
 
 // Liferay code example
+
 /*
  * @Component(
  * property = {
