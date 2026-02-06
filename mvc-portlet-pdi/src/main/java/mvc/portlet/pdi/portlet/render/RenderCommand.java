@@ -11,10 +11,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 
-@Component(property = {
+@Component(
+	property = {
 		"javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
 		"mvc.command.name=showItems"
 }, service = MVCRenderCommand.class)
+
 
 public class RenderCommand implements MVCRenderCommand {
 	@Override

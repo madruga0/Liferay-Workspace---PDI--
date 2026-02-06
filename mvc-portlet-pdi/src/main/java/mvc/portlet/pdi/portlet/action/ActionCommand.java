@@ -10,10 +10,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 
-@Component(property = {
+@Component(
+    property = {
         "javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
         "mvc.command.name=saveItem"
 }, service = MVCActionCommand.class)
+
+
 public class ActionCommand implements MVCActionCommand {
     @Override
     public boolean processAction(ActionRequest actionRequest, ActionResponse actionResponse) {
