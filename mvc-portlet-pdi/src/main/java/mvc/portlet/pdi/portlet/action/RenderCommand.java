@@ -1,6 +1,9 @@
 package mvc.portlet.pdi.portlet.action;
 
+import java.util.List;
+
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -9,6 +12,7 @@ import org.osgi.service.component.annotations.Component;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
+import mvc.portlet.pdi.model.ItemProduct;
 
 /**
  * @author Pedro Madruga
@@ -21,6 +25,13 @@ import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
 public class RenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
+
+		PortletSession session = renderRequest.getPortletSession();
+
+		List<ItemProduct> items = (List<ItemProduct>) session.getAttribute("ITEMS", PortletSession.PORTLET_SCOPE);
+
+		renderRequest.setAttribute("items", items);
+
 		return "/list_items.jsp";
 	}
 

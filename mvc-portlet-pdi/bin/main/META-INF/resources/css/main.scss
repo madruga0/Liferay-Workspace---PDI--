@@ -75,15 +75,13 @@
     border: 1px solid #a9a9a9;
   }
 
-  .text-div,
-  .price-div {
+  .text-div {
     label > span {
       color: var(--red-color);
     }
   }
 
   .text-div,
-  .price-div,
   .fieldset-div {
     margin-top: 15px;
     display: flex;

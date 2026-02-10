@@ -1,72 +1,63 @@
 <%@ include file="/init.jsp" %>
+    <%@ page import="java.util.List" %>
+        <%@ page import="mvc.portlet.pdi.model.ItemProduct" %>
+            <% List<ItemProduct> items = (List<ItemProduct>) request.getAttribute("items");
+                    %>
 
+                    <style type="text/css">
+                        * {
 
-    <!-- 
-Obtendo os atributos da requisição: 
-- Valores definidos no ActionCommand e passados para o render via request.setAttribute
--->
+                            /* Declared variables */
+                            --grey-color: #a0a0a0;
+                            --green: #287d3c;
+                            --white: #ffffff;
+                        }
 
-    <% String name=(String) request.getAttribute("itemName"); Double price=(Double) request.getAttribute("itemPrice");
-        String description=(String) request.getAttribute("itemDescription"); %>
+                        table,
+                        th,
+                        td {
+                            border: 1px solid var(--grey-color);
+                            padding: 8px 10px;
+                        }
 
-        <div class="container">
-            <h1>Items list</h1>
+                        .table thead th {
+                            background-color: var(--green);
+                            color: var(--white);
+                        }
+                    </style>
+                    <div class="container">
+                        <h1>Items list</h1>
 
-            <%-- Botão para voltar ao formulário --%>
-                <portlet:renderURL var="backToFormURL">
-                    <portlet:param name="mvcPath" value="/form.jsp" />
-                </portlet:renderURL>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Item Name</th>                     
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                <aui:form>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Product Price</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                                    <% if (items !=null && !items.isEmpty()) { %>
+                                        <% for (ItemProduct item : items) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= item.getItemName() %>
+                                                </td>
+                                                <td>
+                                                    <%= item.getItemDescription() %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="3" style="text-align:center;">
+                                                            No items registered
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
 
-                                <style type="text/css">
-                                    * {
-
-                                        /* Declared variables */
-                                        --grey-color: #a0a0a0;
-                                        --green: #287d3c;
-                                        --white: #ffffff;
-                                    }
-
-                                    table,
-                                    th,
-                                    td {
-                                        border: 1px solid var(--grey-color);
-                                        padding: 8px 10px;
-                                    }
-
-                                    .table thead th {
-                                        background-color: var(--green);
-                                        color: var(--white);
-                                    }
-                                </style>
-
-                                <tr>
-                                    <td>
-                                        <%= (name !=null) ? name : "Not informed" %>
-                                    </td>
-                                    <td>
-                                        <%= (price !=null) ? price : "Not informed" %>
-                                    </td>
-                                    <td>
-                                        <%= (description !=null) ? description : "Not informed" %>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </aui:form>
-
-
-                <a href="${backToFormURL}" class="btn btn-secondary">Back to the form</a>
-        </div>

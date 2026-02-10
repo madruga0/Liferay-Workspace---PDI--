@@ -1,8 +1,11 @@
 package mvc.portlet.pdi.portlet.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -14,6 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import mvc.portlet.pdi.constants.MvcPortletPdiPortletKeys;
+import mvc.portlet.pdi.model.ItemProduct;
 
 @Component(property = {
         "javax.portlet.name=" + MvcPortletPdiPortletKeys.MVCPORTLETPDI,
@@ -27,78 +31,38 @@ public class ResourceCommand implements MVCResourceCommand {
             throws PortletException {
 
         String itemName = ParamUtil.getString(resourceRequest, "itemName");
-        double productPrice = ParamUtil.getDouble(resourceRequest, "productPrice");
-        String description = ParamUtil.getString(resourceRequest, "description");
+        String itemDescription = ParamUtil.getString(resourceRequest, "description");
 
-        resourceRequest.setAttribute("itemName", itemName);
-        resourceRequest.setAttribute("productPrice", productPrice);
-        resourceRequest.setAttribute("description", description);
+        PortletSession portletSession = resourceRequest.getPortletSession();
+
+        List<ItemProduct> items = (List<ItemProduct>) portletSession.getAttribute("ITEMS");
+
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+
+        ItemProduct item = new ItemProduct();
+
+        item.setItemName(itemName);
+        item.setItemDescription(itemDescription);
+
+        items.add(item);
+
+        portletSession.setAttribute("ITEMS", items);
+
+        // AJAX response
+        resourceResponse.setContentType("application/json");
 
         JSONObject json = JSONFactoryUtil.createJSONObject();
         json.put("success", true);
+        json.put("total", items.size());
 
         try {
-            resourceResponse.getWriter().print(json.toString());
+            resourceResponse.getWriter().write(json.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new PortletException(e);
         }
         return false;
     }
 
 }
-
-// Liferay code example
-/*
- * @Component(
- * property = {
- * "javax.portlet.name=com_acme_p8v5_web_internal_portlet_P8V5Portlet",
- * "mvc.command.name=/p8v5/download"
- * },
- * service = MVCResourceCommand.class
- * )
- * public class P8V5DownloadMVCResourceCommand implements MVCResourceCommand {
- * 
- * @Override
- * public boolean serveResource(
- * ResourceRequest resourceRequest, ResourceResponse resourceResponse)
- * throws PortletException {
- * 
- * try {
- * PortletResponseUtil.sendFile(
- * resourceRequest, resourceResponse, "p8v5.txt",
- * "Hello P8V5!".getBytes(), "text");
- * 
- * return false;
- * }
- * catch (IOException ioException) {
- * _log.error(ioException, ioException);
- * 
- * return true;
- * }
- * }
- * 
- * private static final Log _log = LogFactoryUtil.getLog(
- * P8V5DownloadMVCResourceCommand.class);
- * 
- * }
- */
-
-// GEMINI CODE
-/*
- * @Override
- * public boolean serveResource(
- * ResourceRequest request, ResourceResponse response) {
- * 
- * String name = ParamUtil.getString(request, "itemName");
- * double price = ParamUtil.getDouble(request, "productPrice");
- * String description = ParamUtil.getString(request, "description");
- * 
- * ItemService.save(name, price, description);
- * 
- * JSONObject json = JSONFactoryUtil.createJSONObject();
- * json.put("success", true);
- * 
- * response.getWriter().print(json.toString());
- * return false;
- * }
- */

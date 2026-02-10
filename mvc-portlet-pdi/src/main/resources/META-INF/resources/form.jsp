@@ -4,6 +4,8 @@
     <portlet:renderURL var="showItemsRenderURL">
         <portlet:param name="mvcRenderCommandName" value="showItems" />
     </portlet:renderURL>
+    <portlet:resourceURL var="listAllItens" id="saveItem" />
+
 
     <div class="page">
         <header class="form-header text-center">
@@ -19,12 +21,6 @@
                         id="<portlet:namespace />itemName" placeholder="Ex: Logitec Mouse" required>
                 </div>
 
-                <div class="price-div mb-3">
-                    <label for="price-input">Product price <span>*</span></label>
-                    <input class="form-control" type="number" name="<portlet:namespace />productPrice"
-                        placeholder="U$ 0.00" required>
-                </div>
-
                 <div class="fieldset-div mb-4">
                     <label>Description</label>
                     <textarea class="form-control" name="<portlet:namespace />description"
@@ -33,8 +29,29 @@
 
                 <div class="btn-group d-flex justify-content-around">
                     <aui:button type="submit" cssClass="btn btn-success" value="Add Item" id="submitBtn" />
-                    <a type="button" class="btn btn-secondary" href="<%= showItemsRenderURL %>" id="itemsList">See list items</a>
+                    <a type="button" class="btn btn-secondary" href="<%= showItemsRenderURL %>" id="itemsList">See list
+                        items</a>
                 </div>
             </div>
         </aui:form>
+
+        <script>
+            const saveItem = () => {
+                const name = document.querySelector('[name$="itemName"]').value;
+                const description = document.querySelector('[name$="description"]').value;
+
+                fetch('<%= listAllItens %>', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        '<portlet:namespace />itemName': name,
+                        '<portlet:namespace />description': description
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Items total: ', data.total)
+                        console.log(data.json());
+                    })
+            }
+        </script>
     </div>
